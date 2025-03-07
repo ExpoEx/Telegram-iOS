@@ -32,3 +32,6 @@
 [submodule "third-party/dav1d/dav1d"]
 	path = third-party/dav1d/dav1d
 	url = https://github.com/ali-fareed/dav1d.git
+[submodule "third-party/SnapKit/SnapKit"]
+	path = third-party/SnapKit/snap_kit
+	url = https://github.com/SnapKit/SnapKit.git
