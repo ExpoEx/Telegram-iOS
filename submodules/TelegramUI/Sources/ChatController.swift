@@ -675,6 +675,8 @@ public final class ChatControllerImpl: TelegramBaseController, ChatController, G
         customChatNavigationStack: [EnginePeer.Id]? = nil,
         params: ChatControllerParams? = nil
     ) {
+        print("expo: ", mode)
+        
         let _ = ChatControllerCount.modify { value in
             return value + 1
         }

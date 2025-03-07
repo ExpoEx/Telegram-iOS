@@ -1464,6 +1464,7 @@ public class ChatListControllerImpl: TelegramBaseController, ChatListController 
                     if case let .channel(channel) = peer.peer, channel.flags.contains(.isForum) {
                         if let threadId = threadId {
                             let source: ContextContentSource
+                            print("expo: 1")
                             let chatController = strongSelf.context.sharedContext.makeChatController(context: strongSelf.context, chatLocation: .replyThread(message: ChatReplyThreadMessage(
                                 peerId: peer.peerId, threadId: threadId, channelMessageId: nil, isChannelPost: false, isForumPost: true, maxMessage: nil, maxReadIncomingMessageId: nil, maxReadOutgoingMessageId: nil, unreadCount: 0, initialFilledHoles: IndexSet(), initialAnchor: .automatic, isNotAvailable: false
                             )), subject: nil, botStart: nil, mode: .standard(.previewing), params: nil)
@@ -1491,6 +1492,8 @@ public class ChatListControllerImpl: TelegramBaseController, ChatListController 
                             strongSelf.presentInGlobalOverlay(contextController)
                         }
                     } else {
+                        print("expo: 2 ", PeerId(683905927))
+                        
                         var dismissPreviewingImpl: (() -> Void)?
                         let source: ContextContentSource
                         if let location = location {
@@ -1520,6 +1523,9 @@ public class ChatListControllerImpl: TelegramBaseController, ChatListController 
                     case .none:
                         isPinned = false
                     }
+                    
+                    print("expo: 3")
+                    
                     let source: ContextContentSource
                     let chatController = strongSelf.context.sharedContext.makeChatController(context: strongSelf.context, chatLocation: .replyThread(message: ChatReplyThreadMessage(
                         peerId: peer.peerId, threadId: threadId, channelMessageId: nil, isChannelPost: false, isForumPost: true, maxMessage: nil, maxReadIncomingMessageId: nil, maxReadOutgoingMessageId: nil, unreadCount: 0, initialFilledHoles: IndexSet(), initialAnchor: .automatic, isNotAvailable: false
@@ -1573,6 +1579,9 @@ public class ChatListControllerImpl: TelegramBaseController, ChatListController 
                     if case let .search(messageId) = source, let id = messageId {
                         subject = .message(id: .id(id), highlight: nil, timecode: nil, setupReply: false)
                     }
+                    
+                    print("expo: 4")
+                    
                     let chatController = strongSelf.context.sharedContext.makeChatController(context: strongSelf.context, chatLocation: .peer(id: peer.id), subject: subject, botStart: nil, mode: .standard(.previewing), params: nil)
                     chatController.canReadHistory.set(false)
                     contextContentSource = .controller(ContextControllerContentSourceImpl(controller: chatController, sourceNode: node, navigationController: strongSelf.navigationController as? NavigationController))

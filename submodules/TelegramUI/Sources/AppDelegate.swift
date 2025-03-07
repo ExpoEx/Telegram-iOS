@@ -43,6 +43,7 @@ import TelegramUIDeclareEncodables
 import ContextMenuScreen
 import MetalEngine
 import RecaptchaEnterprise
+import TGTools
 
 #if canImport(AppCenter)
 import AppCenter
@@ -1251,7 +1252,17 @@ private func extractAccountManagerState(records: AccountRecordsView<TelegramAcco
                     print("Launch to ready took \((CFAbsoluteTimeGetCurrent() - launchStartTime) * 1000.0) ms")
 
                     self.mainWindow.debugAction = nil
-                    self.mainWindow.viewController = context.rootController
+//                    self.mainWindow.viewController = context.rootController
+                    
+                    let cardsViewController = CustomChatViewController()
+                    
+                    // Wrap it in a containable adapter for Telegram's container system
+                    let containableController = ContainableAdapter(controller: cardsViewController)
+                    
+                    // Set it as the main window's view controller
+                    self.mainWindow.viewController = containableController
+                    
+                    cardsViewController.setupWithContext(context.context)
                     
                     if firstTime {
                         let layer = context.rootController.view.layer
@@ -1280,8 +1291,8 @@ private func extractAccountManagerState(records: AccountRecordsView<TelegramAcco
                         }
                         return true
                     })
-                    self.mainWindow.topLevelOverlayControllers = [context.sharedApplicationContext.overlayMediaController, context.notificationController]
-                    (context.context.sharedContext as? SharedAccountContextImpl)?.notificationController = context.notificationController
+//                    self.mainWindow.topLevelOverlayControllers = [context.sharedApplicationContext.overlayMediaController, context.notificationController]
+//                    (context.context.sharedContext as? SharedAccountContextImpl)?.notificationController = context.notificationController
                     var authorizeNotifications = true
                     if #available(iOS 10.0, *) {
                         authorizeNotifications = false
