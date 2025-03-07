@@ -1254,15 +1254,28 @@ private func extractAccountManagerState(records: AccountRecordsView<TelegramAcco
                     self.mainWindow.debugAction = nil
 //                    self.mainWindow.viewController = context.rootController
                     
-                    let cardsViewController = CustomChatViewController()
+                    let chatCardsViewController = SwipeableChatCardsViewController()
                     
                     // Wrap it in a containable adapter for Telegram's container system
-                    let containableController = ContainableAdapter(controller: cardsViewController)
+                    let containableController = ContainableAdapter(controller: chatCardsViewController)
                     
                     // Set it as the main window's view controller
                     self.mainWindow.viewController = containableController
                     
-                    cardsViewController.setupWithContext(context.context)
+                    // Initialize the controller with the account context and peer IDs
+                    // Here we're using an array of peer IDs you want to display as cards
+                    let peerIds: [PeerId] = [
+                        PeerId(683905927),
+                        PeerId(153577372), // Replace with actual peer IDs
+                        PeerId(1097205783),  // Replace with actual peer IDs
+                        PeerId(97759799),
+                        PeerId(683905927),
+                        PeerId(153577372), // Replace with actual peer IDs
+                        PeerId(1097205783),  // Replace with actual peer IDs
+                        PeerId(97759799),
+                    ]
+                    
+                    chatCardsViewController.setup(with: context.context, peerIds: peerIds)
                     
                     if firstTime {
                         let layer = context.rootController.view.layer
